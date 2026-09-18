@@ -1,7 +1,12 @@
-# OpenJev
+# OpenJev - Jev-Inspired System One Decision API
 
-OpenJev is an open-source implementation of a Jev-like "System One" decision
-interface: state goes in, typed probabilistic decisions come out.
+OpenJev is an independent project inspired by **Jev**, the **System One** model
+from **[TypeSafe.ai (TypeSafe AI)](https://typesafe.ai/)**. It implements a
+Jev-inspired decision API with `choice`, `score`, and `noul` primitives:
+state goes in, typed probabilistic decisions come out.
+
+Explore a local HTTP API, Python SDK, and JavaScript / TypeScript SDK for
+prototyping ticket routing, classification, scoring, and AI guardrail workflows.
 
 The first runnable release includes a local mock API, Python and JavaScript
 clients, schema validation, and end-to-end tests. Mock probabilities are synthetic:
@@ -10,6 +15,11 @@ they do not measure truth, risk, or model quality.
 This project is not affiliated with TypeSafe AI. It does not include TypeSafe's
 Jev model, weights, training data, training method, service, or private
 benchmarks.
+
+中文简介：OpenJev 是受 TypeSafe.ai 的 Jev 模型启发的独立决策 API 项目，
+提供本地 mock 服务、Python 和 JavaScript / TypeScript SDK，
+用于验证分类、评分、工单路由和 AI 护栏的接口流程。
+当前不包含 Jev 模型权重，也不提供真实模型推理。
 
 ## Quick Start
 
@@ -42,7 +52,7 @@ See [the protocol](docs/protocol.md) for limits, errors, and probability semanti
 npm --prefix sdk/js test
 ```
 
-## What Jev Is For
+## What Is TypeSafe.ai Jev Used For?
 
 Jev, as described by TypeSafe AI, is aimed at machine-native automation instead
 of chat. The key idea is:
@@ -235,6 +245,29 @@ What does not exist yet:
 4. Add adapter interfaces for open models and classifier backends.
 5. Add calibration metrics and workflow eval fixtures.
 6. Publish example applications for ticket routing and guardrails.
+
+## Jev and TypeSafe.ai FAQ
+
+### Is OpenJev an official TypeSafe AI project or an open-weight Jev model?
+
+No. OpenJev is independently developed from the publicly described Jev concepts.
+TypeSafe.ai has not supplied this repository with Jev model weights, training
+data, or proprietary implementation code.
+
+### Can OpenJev replace the TypeSafe.ai Jev API?
+
+The current release supports local integration prototyping with a deterministic
+mock backend. It is not a drop-in replacement for the hosted Jev API, and does
+not claim wire compatibility or equivalent prediction quality. Real inference
+adapters and calibration evaluations are planned in the [roadmap](docs/roadmap.md).
+
+### Where can I learn about the original Jev model and the OpenJev API?
+
+- [TypeSafe.ai](https://typesafe.ai/): the original Jev product.
+- [TypeSafe documentation](https://docs.typesafe.ai/introduction): Jev concepts.
+- [TypeSafe primitives](https://docs.typesafe.ai/primitives): typed decisions.
+- [OpenJev protocol](docs/protocol.md): local endpoints and answer semantics.
+- [OpenJev examples](examples/README.md): runnable Python and JavaScript clients.
 
 ## License
 
