@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openjev.dev/specs/system-one.schema.json",
+  "title": "OpenJev System One API",
+  "type": "object",
+  "required": ["state", "questions"],
+  "additionalProperties": false,
+  "properties": {
+    "state": {
+      "description": "Shared state evaluated by every question.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object" },
+        { "type": "array" }
+      ]
+    },
+    "model": {
+      "type": "string",
+      "default": "openjev-local"
+    },
+    "questions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "oneOf": [
+          { "$ref": "#/$defs/choiceQuestion" },
+          { "$ref": "#/$defs/scoreQuestion" },
+          { "$ref": "#/$defs/noulQuestion" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "choiceQuestion": {
+      "type": "object",
+      "required": ["type", "instructions", "criteria"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "choice" },
+        "instructions": { "type": "string", "minLength": 1 },
+        "criteria": {
+          "type": "object",
+          "minProperties": 2,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "scoreQuestion": {
+      "type": "object",
+      "required": ["type", "instructions", "criteria"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "score" },
+        "instructions": { "type": "string", "minLength": 1 },
+        "criteria": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "noulQuestion": {
+      "type": "object",
+      "required": ["type", "instructions"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "noul" },
+        "instructions": { "type": "string", "minLength": 1 },
+        "criteria": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object" }
+          ]
+        }
+      }
+    }
+  }
+}
