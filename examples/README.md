@@ -1,10 +1,12 @@
 # Examples
 
-Placeholder for runnable examples.
+Start the local server from the repository root, then run:
 
-Planned examples:
+```sh
+.venv/bin/python examples/ticket.py
+node examples/ticket.mjs
+```
 
-- support ticket routing;
-- LLM guardrails;
-- function selection;
-- document classification.
+Both examples load `ticket.json`, call all three primitives, and print answers.
+They accept an optional base URL as the first argument.
+Outputs are synthetic mock data, not actual ticket classification.

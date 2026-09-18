@@ -1,15 +1,46 @@
 # OpenJev
 
-OpenJev is an open-source design for a Jev-like "System One" decision
+OpenJev is an open-source implementation of a Jev-like "System One" decision
 interface: state goes in, typed probabilistic decisions come out.
 
-The goal of this repository is to make the interface, SDK surface, service
-boundary, examples, and evaluation workflow public and hackable before any
-model implementation is added.
+The first runnable release includes a local mock API, Python and JavaScript
+clients, schema validation, and end-to-end tests. Mock probabilities are synthetic:
+they do not measure truth, risk, or model quality.
 
 This project is not affiliated with TypeSafe AI. It does not include TypeSafe's
 Jev model, weights, training data, training method, service, or private
 benchmarks.
+
+## Quick Start
+
+Requires Python 3.11+ and Node.js 20+ for JavaScript examples and tests.
+Run these commands from the repository root:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt -e sdk/python
+.venv/bin/python -m server --port 8000
+```
+
+In another terminal:
+
+```sh
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/v1/system_one \
+  -H 'Content-Type: application/json' --data-binary @examples/ticket.json
+.venv/bin/python examples/ticket.py
+node examples/ticket.mjs
+```
+
+The server binds to loopback by default. It is a local development service
+without authentication or production serving infrastructure.
+Only `openjev-mock` is supported; omit `model` to select it.
+See [the protocol](docs/protocol.md) for limits, errors, and probability semantics.
+
+```sh
+.venv/bin/python -m unittest discover -s tests -v
+npm --prefix sdk/js test
+```
 
 ## What Jev Is For
 
@@ -49,7 +80,7 @@ The first public surface is a `system_one` call:
   "state": {
     "ticket": "Stripe connection has failed for 3 days. We are losing sales."
   },
-  "model": "openjev-local",
+  "model": "openjev-mock",
   "questions": {
     "department": {
       "type": "choice",
@@ -77,11 +108,11 @@ The first public surface is a `system_one` call:
 }
 ```
 
-Expected response shape:
+Illustrative response shape (numbers below are not mock fixture outputs):
 
 ```json
 {
-  "model": "openjev-local",
+  "model": "openjev-mock",
   "answers": {
     "department": {
       "type": "choice",
@@ -106,7 +137,7 @@ Expected response shape:
         "1": 0.5,
         "2": 0.45
       },
-      "confidence": 0.45
+      "confidence": 0.05
     },
     "urgent": {
       "type": "noul",
@@ -171,29 +202,28 @@ Directory intent:
 
 - `docs/`: product design notes, architecture, roadmap, and use-case patterns.
 - `specs/`: request and response contracts for interoperable implementations.
-- `sdk/js/`: future JavaScript or TypeScript SDK.
-- `sdk/python/`: future Python SDK.
-- `server/`: future local or hosted API service implementation.
-- `examples/`: runnable examples once an implementation exists.
+- `sdk/js/`: JavaScript SDK with inferred TypeScript answer types.
+- `sdk/python/`: synchronous and asynchronous Python SDK.
+- `server/`: local HTTP service and replaceable backend boundary.
+- `examples/`: runnable ticket request and client examples.
 - `evals/`: calibration, regression, and workflow benchmark harnesses.
 - `tests/`: contract and behavior tests.
 
 ## Project Status
 
-Status: initialized design skeleton.
+Status: contract and mock runtime implemented (roadmap phases 1 and 2).
 
 What exists now:
 
-- README;
-- repository directory layout;
-- initial System One JSON schema;
-- documentation placeholders.
+- Request and response schemas with runtime semantic validation.
+- Deterministic mock backend and local HTTP API.
+- Python and JavaScript SDK implementations.
+- Examples, contract tests, HTTP tests, and SDK tests.
 
 What does not exist yet:
 
 - trained model;
-- inference server;
-- SDK implementation;
+- real inference backend;
 - hosted API;
 - benchmark results.
 

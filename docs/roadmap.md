@@ -8,11 +8,15 @@
 
 ## Phase 1: Contract Package
 
+Status: implemented with request/response schemas and runtime semantic checks.
+
 - Harden `specs/system-one.schema.json`.
 - Add contract tests.
 - Add example request and response fixtures.
 
 ## Phase 2: Mock Runtime
+
+Status: implemented with local HTTP transport and Python/JavaScript clients.
 
 - Add deterministic mock answers.
 - Add a small local HTTP server.

@@ -1,0 +1,20 @@
+{
+  "model": "openjev-mock",
+  "answers": {
+    "department": {
+      "type": "choice",
+      "probabilities": {"billing": 0.539417192805757, "technical": 0.46058280719424305},
+      "confidence": 0.0788343856115139,
+      "choice": "billing"
+    },
+    "severity": {
+      "type": "score",
+      "probabilities": {"0": 0.2955163942929623, "1": 0.2627485354855735, "2": 0.44173507022146424},
+      "confidence": 0.14621867592850196,
+      "score": 1.146218675928502,
+      "legend": {"0": "Minor inconvenience", "1": "Partially blocked", "2": "Unable to operate"}
+    },
+    "urgent": {"type": "noul", "noul": 0.931293446379757}
+  },
+  "usage": {"input_tokens": 0, "output_tokens": 0}
+}

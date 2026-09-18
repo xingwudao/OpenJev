@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OpenJev System One response",
+  "type": "object",
+  "required": ["model", "answers", "usage"],
+  "additionalProperties": false,
+  "properties": {
+    "model": {"type": "string", "minLength": 1},
+    "answers": {
+      "type": "object", "minProperties": 1,
+      "additionalProperties": {
+        "oneOf": [
+          {"$ref": "#/$defs/choice"},
+          {"$ref": "#/$defs/score"},
+          {"$ref": "#/$defs/noul"}
+        ]
+      }
+    },
+    "usage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_tokens", "output_tokens"],
+      "properties": {
+        "input_tokens": {"type": "integer", "minimum": 0},
+        "output_tokens": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "probability": {"type": "number", "minimum": 0, "maximum": 1},
+    "distribution": {
+      "type": "object", "minProperties": 2,
+      "additionalProperties": {"$ref": "#/$defs/probability"}
+    },
+    "choice": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "choice", "probabilities", "confidence"],
+      "properties": {
+        "type": {"const": "choice"},
+        "choice": {"type": "string"},
+        "probabilities": {"$ref": "#/$defs/distribution"},
+        "confidence": {"$ref": "#/$defs/probability"}
+      }
+    },
+    "score": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "score", "legend", "probabilities", "confidence"],
+      "properties": {
+        "type": {"const": "score"},
+        "score": {"type": "number", "minimum": 0},
+        "legend": {"type": "object", "minProperties": 2, "additionalProperties": {"type": "string"}},
+        "probabilities": {"$ref": "#/$defs/distribution"},
+        "confidence": {"$ref": "#/$defs/probability"}
+      }
+    },
+    "noul": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "noul"],
+      "properties": {
+        "type": {"const": "noul"},
+        "noul": {"$ref": "#/$defs/probability"}
+      }
+    }
+  }
+}

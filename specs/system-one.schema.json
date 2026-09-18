@@ -16,11 +16,14 @@
     },
     "model": {
       "type": "string",
-      "default": "openjev-local"
+      "minLength": 1,
+      "default": "openjev-mock"
     },
     "questions": {
       "type": "object",
       "minProperties": 1,
+      "maxProperties": 128,
+      "propertyNames": {"minLength": 1},
       "additionalProperties": {
         "oneOf": [
           { "$ref": "#/$defs/choiceQuestion" },
@@ -41,6 +44,8 @@
         "criteria": {
           "type": "object",
           "minProperties": 2,
+          "maxProperties": 256,
+          "propertyNames": {"minLength": 1},
           "additionalProperties": {
             "type": "string",
             "minLength": 1
@@ -58,6 +63,7 @@
         "criteria": {
           "type": "array",
           "minItems": 2,
+          "maxItems": 256,
           "items": {
             "type": "string",
             "minLength": 1

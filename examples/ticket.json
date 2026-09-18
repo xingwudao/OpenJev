@@ -1,0 +1,15 @@
+{
+  "state": {"ticket": "The payment integration has been failing for three days."},
+  "questions": {
+    "department": {
+      "type": "choice",
+      "instructions": "Which team should handle the ticket?",
+      "criteria": {"billing": "Invoices and charges", "technical": "Bugs and integrations"}
+    },
+    "severity": {
+      "type": "score", "instructions": "How severe is the issue?",
+      "criteria": ["Minor inconvenience", "Partially blocked", "Unable to operate"]
+    },
+    "urgent": {"type": "noul", "instructions": "The ticket requires urgent action."}
+  }
+}
